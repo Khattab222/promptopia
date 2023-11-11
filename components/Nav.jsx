@@ -8,6 +8,7 @@ import {signIn,signOut,useSession,getProviders} from 'next-auth/react'
 const Nav = () => {
   let isUserLoggedIn = true
   const [providers, setProviders] = useState(null)
+  const [toggleDropdown, settoggleDropdown] = useState(false)
   useEffect(() => {
     const setproviders = async () =>{
       const response = await getProviders()
@@ -75,9 +76,20 @@ const Nav = () => {
       width={40}
       height={40}
       alt='progile'
-      className=' rounded-full '
-      // onClick={()=>console.log('ss')}
+      className=' rounded-full cursor-pointer '
+      onClick={()=>settoggleDropdown((prev) =>!prev)}
       />
+      {
+        toggleDropdown && (
+          <div className='dropdown' >
+            <Link href='/profile'
+            className=''
+            >
+            My Profile
+            </Link>
+          </div>
+        )
+      }
   </div>
 ):(<>
  {
