@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google'
 import '@styles/globals.css'
-
+import Head from 'next/head'
 import Provider from '@components/Provider'
 import Nav from '@components/Nav'
 
@@ -15,6 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+     
       <body >
         <div className='main'>
 

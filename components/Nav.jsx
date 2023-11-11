@@ -6,7 +6,7 @@ import {signIn,signOut,useSession,getProviders} from 'next-auth/react'
 
 
 const Nav = () => {
-  let isUserLoggedIn = false
+  let isUserLoggedIn = true
   const [providers, setProviders] = useState(null)
   useEffect(() => {
     const setproviders = async () =>{
@@ -38,7 +38,7 @@ const Nav = () => {
       >
       Create Post
       </Link>
-      <button className='outline_btn '>SignOut</button>
+      <button className='font-inter outline_btn '>SignOut</button>
       <Link href='/profile'>
       <Image
       src="/assets/images/profile.png"
@@ -55,7 +55,7 @@ const Nav = () => {
         <button type='button'
         key={provider.name}
         onClick={() => signIn(provider.id)}
-        className='black_btn'
+        className='black_btn font-inter'
         >
           SignIn
         </button>
@@ -67,6 +67,32 @@ const Nav = () => {
 </div>
 
 {/* mobile navigation */}
+<div className='sm:hidden flex relative'>
+{isUserLoggedIn?(
+  <div className='flex'>
+    <Image
+      src="/assets/images/profile.png"
+      width={40}
+      height={40}
+      alt='progile'
+      className=' rounded-full '
+      // onClick={()=>console.log('ss')}
+      />
+  </div>
+):(<>
+ {
+      providers&&Object.values(providers).map((provider) =>{
+        <button type='button'
+        key={provider.name}
+        onClick={() => signIn(provider.id)}
+        className='black_btn font-inter'
+        >
+          SignIn
+        </button>
+      })
+    }
+</>)}
+</div>
     </nav>
   )
 }
