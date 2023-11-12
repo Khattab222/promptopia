@@ -1,6 +1,5 @@
 import { Inter } from 'next/font/google'
 import '@styles/globals.css'
-import Head from 'next/head'
 import Provider from '@components/Provider'
 import Nav from '@components/Nav'
 
@@ -17,6 +16,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
      
       <body >
+        <Provider>
         <div className='main'>
 
         <div className='gradients'/>
@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
         {children}
         </main>
 
-       
+        </Provider>
       </body>
     </html>
   )
