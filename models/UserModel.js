@@ -1,4 +1,4 @@
-import { Schema,model } from "mongoose";
+import { Schema,model,Models } from "mongoose";
 
 const userSchema = new Schema({
 
@@ -10,6 +10,11 @@ const userSchema = new Schema({
     username:{
         type:String,
         required:[true,'Username is required'],
-        match: [/^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/, "Username invalid, it should contain 8-20 alphanumeric letters and be unique!"]
-    }
+        match: [/^(?=.{5,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/, "Username invalid, it should contain 5-20 alphanumeric letters and be unique!"]
+    },
+    image:String
 })
+
+const userModel = Models.User || model('User',userSchema);
+
+export default userModel
