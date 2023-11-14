@@ -6,17 +6,30 @@ import {signIn,signOut,useSession,getProviders} from 'next-auth/react'
 
 
 const Nav = () => {
-  let isUserLoggedIn = true
+ 
+  
+  const {data:session} = useSession()
+
+
   const [providers, setProviders] = useState(null)
   const [toggleDropdown, settoggleDropdown] = useState(false)
   useEffect(() => {
-    const setproviders = async () =>{
+    const setUpproviders = async () =>{
       const response = await getProviders()
       setProviders(response)
+     
+      
     }
-    setproviders()
-  }, [])
   
+    setUpproviders()
+  }, [])
+
+  useEffect(() => {
+    
+  console.log(session?.user)
+  }, [session])
+  
+
   return (
     <nav className=' flex-between w-full mb-8 py-3 border  items-center'>
 <Link href='/' className='flex gap-2 flex-center '>
@@ -33,16 +46,17 @@ const Nav = () => {
 
 <div className='sm:flex hidden'>
 {
-  isUserLoggedIn? (<div className='flex gap-3 md:gap-5'>
+  session?.user? (<div className='flex gap-3 md:gap-5'>
+   
       <Link href='/create-prompt'
       className='black_btn'
       >
       Create Post
       </Link>
-      <button className='font-inter outline_btn '>SignOut</button>
+      <button className='font-inter outline_btn ' onClick={() =>signOut()} >SignOut</button>
       <Link href='/profile'>
       <Image
-      src="/assets/images/profile.png"
+      src={session?.user.image}
       width={40}
       height={40}
       alt='progile'
@@ -51,17 +65,20 @@ const Nav = () => {
       </Link>
   </div> ):(
     <>
-    {
-      providers&&Object.values(providers).map((provider) =>{
-        <button type='button'
-        key={provider.name}
-        onClick={() => signIn(provider.id)}
-        className='black_btn font-inter'
-        >
-          SignIn
-        </button>
-      })
-    }
+   
+   {providers &&
+              Object.values(providers).map((provider) => (
+                <button
+                  type='button'
+                  key={provider.name}
+                  onClick={() => {
+                    signIn(provider.id);
+                  }}
+                  className='black_btn'
+                >
+                  Sign in
+                </button>
+              ))}
     </>
   )
 }
@@ -69,10 +86,10 @@ const Nav = () => {
 
 {/* mobile navigation */}
 <div className='sm:hidden flex relative'>
-{isUserLoggedIn?(
+{session?.user?(
   <div className='flex'>
     <Image
-      src="/assets/images/profile.png"
+      src={session?.user.image}
       width={40}
       height={40}
       alt='progile'
@@ -109,17 +126,19 @@ const Nav = () => {
       }
   </div>
 ):(<>
- {
-      providers&&Object.values(providers).map((provider) =>{
-        <button type='button'
-        key={provider.name}
-        onClick={() => signIn(provider.id)}
-        className='black_btn font-inter'
-        >
-          SignIn
-        </button>
-      })
-    }
+  {providers &&
+              Object.values(providers).map((provider) => (
+                <button
+                  type='button'
+                  key={provider.name}
+                  onClick={() => {
+                    signIn(provider.id);
+                  }}
+                  className='black_btn'
+                >
+                  Sign in
+                </button>
+              ))}
 </>)}
 </div>
     </nav>

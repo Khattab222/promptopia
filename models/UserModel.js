@@ -1,4 +1,4 @@
-import { Schema,model,Models } from "mongoose";
+import { Schema,model, models } from "mongoose";
 
 const userSchema = new Schema({
 
@@ -15,6 +15,6 @@ const userSchema = new Schema({
     image:String
 })
 
-const userModel = Models.User || model('User',userSchema);
+const userModel = models.User || model('User',userSchema);
 
 export default userModel
