@@ -26,7 +26,7 @@ const Nav = () => {
 
   useEffect(() => {
     
-  console.log(session?.user)
+  console.log(session)
   }, [session])
   
 

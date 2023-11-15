@@ -15,35 +15,41 @@ const handler = NextAuth({
         const sessionUser = await userModel.findOne({
             email:session.email
         })
+        console.log(sessionUser)
         session.user.id = sessionUser._id.toString();
-
         return session
     },
-    async signIn ({profile}){
-        try {
-            await connectDb()
-//   check if user already exist 
-            const userExist = await userModel.findOne({
-                email:profile.email
-            })
 
-
-// if not create anew user
-            if (!userExist) {
-                await userModel.create({
-                    email:profile.email,
-                    username:profile.name.toLowerCase(),
-                    image:profile.picture
+    callbacks:{
+       
+        async signIn ({profile}){
+            try {
+                await connectDb()
+    //   check if user already exist 
+                const userExist = await userModel.findOne({
+                    email:profile.email
                 })
+    
+    
+    // if not create anew user
+                if (!userExist) {
+                    await userModel.create({
+                        email:profile.email,
+                        username:profile.name.toLowerCase(),
+                        image:profile.picture
+                    })
+                }
+    
+                return true
+            } catch (error) {
+                console.log(error)
+                return false
             }
-
-            return true
-        } catch (error) {
-            console.log(error)
-            return false
-        }
-
-    }
+    
+        },
+       
+    },
+ 
 })
 
 export {handler as GET , handler as POST}
