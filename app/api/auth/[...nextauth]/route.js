@@ -11,16 +11,18 @@ const handler = NextAuth({
             clientSecret:process.env.GOOGLE_CLIENT_SECRET
         })
     ],
-    async session ({session}){
-        const sessionUser = await userModel.findOne({
-            email:session.email
-        })
-        console.log(sessionUser)
-        session.user.id = sessionUser._id.toString();
-        return session
-    },
-
+  
     callbacks:{
+        async session ({session}){
+      
+            const sessionUser = await userModel.findOne({
+                email:session.user.email
+            })
+        console.log(sessionUser)
+            session.user.id = sessionUser._id.toString();
+            return session
+        },
+    
        
         async signIn ({profile}){
             try {

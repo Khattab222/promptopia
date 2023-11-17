@@ -24,10 +24,6 @@ const Nav = () => {
     setUpproviders()
   }, [])
 
-  useEffect(() => {
-    
-  console.log(session)
-  }, [session])
   
 
   return (
