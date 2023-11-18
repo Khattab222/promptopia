@@ -1,17 +1,22 @@
 'use client'
 import React, { useEffect, useState } from 'react'
+import PromptCard from './PromptCard'
 
 const Feed = () => {
   const [searchText, setsearchText] = useState('')
-  const [posts, setposts] = useState([])
-useEffect(() => {
-  
+  const [allposts, setAllPosts] = useState([])
+
+
+  // fetch all posts 
   const fetchPosts = async() =>{
     const res = await fetch('./api/prompt');
     const data = await res.json()
-    setposts(data)
+    setAllPosts(data)
+ 
   }
-console.log(posts);
+useEffect(() => {
+  
+  
   fetchPosts()
 }, [])
 
@@ -53,7 +58,7 @@ console.log(posts);
       </form>
 
       <PromptCardList
-      data={[]}
+      data={allposts}
       handleTagClick={handleTagClick}
       
       />
