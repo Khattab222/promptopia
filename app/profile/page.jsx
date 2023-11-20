@@ -7,12 +7,13 @@ import {useState,useEffect} from 'react'
 
 const myProfile = () => {
   const {data:session} = useSession()
+  const router = useRouter()
   const [posts, setposts] = useState([])
 
-  const handleEdit = () =>{
-    
+  const handleEdit = (post) =>{
+    router.push(`/update-prompt?id=${post._id}`)
   }
-  const handleDelete = async() =>{
+  const handleDelete = async(post) =>{
 
   }
 
@@ -31,6 +32,7 @@ const myProfile = () => {
    if(session?.user.id) fetchPosts()
   
   }, [])
+
   return (
    <Profile
    name='my'
