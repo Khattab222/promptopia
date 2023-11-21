@@ -32,6 +32,7 @@ export const PATCH = async (req,{params}) =>{
         existPrompt.prompt = prompt;
         existPrompt.tag = tag;
         await existPrompt.save(); 
+        return new Response('update success' , {status:200})
 
     } catch (error) {
      return new Response('fail to update prompt',{status:500})
@@ -42,9 +43,11 @@ export const PATCH = async (req,{params}) =>{
 // DELETE (delete)
 export  const DELETE = async (req,{params}) =>{
     try {
-            await promptModel.findByIdAndRemove(params.id);
+            await promptModel.findByIdAndDelete(params.id);
+            
             return new Response('prompt deleted',{status:200})
     } catch (error) {
+
      return new Response('fail to remove',{status:500})
         
     }
