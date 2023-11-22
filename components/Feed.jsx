@@ -20,9 +20,24 @@ useEffect(() => {
   fetchPosts()
 }, [])
 
+// handle fetch search 
+const handleSearchFetch = async () =>{
+  const res = await fetch(`/api/prompt/search`,{
+    method: 'POST',
+   
+    body: JSON.stringify({search: searchText})
+  })
+  const data = await res.json()
+  if (res.ok) {
+    console.log(data)
+    setAllPosts(data)
+  }
+}
 
   const handleSearchChange = (e) =>{
     e.preventDefault()
+    setsearchText(e.target.value);
+    handleSearchFetch()
   }
 
 
@@ -49,7 +64,7 @@ useEffect(() => {
     <section className='feed'>
       <form className='relative w-full flex-center' >
         <input type="text"
-         placeholder='Search for a tag or a username'
+         placeholder='Search for a tag or prompt'
          value={searchText}
          onChange={handleSearchChange}
          required
