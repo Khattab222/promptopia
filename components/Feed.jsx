@@ -20,6 +20,12 @@ useEffect(() => {
   fetchPosts()
 }, [])
 
+useEffect(() => {
+  handleSearchFetch()
+
+}, [searchText])
+
+
 // handle fetch search 
 const handleSearchFetch = async () =>{
   const res = await fetch(`/api/prompt/search`,{
@@ -29,7 +35,6 @@ const handleSearchFetch = async () =>{
   })
   const data = await res.json()
   if (res.ok) {
-    console.log(data)
     setAllPosts(data)
   }
 }
@@ -41,8 +46,10 @@ const handleSearchFetch = async () =>{
   }
 
 
-  const handleTagClick = () =>{
-
+  const handleTagClick = (tag) =>{
+    setsearchText(tag);
+    console.log(searchText);
+    // handleSearchFetch()
   }
 
 
