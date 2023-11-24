@@ -6,7 +6,12 @@ import { useRouter } from "next/navigation";
 
 const createPrompt = () => {
   const router = useRouter();
-  const {data:session} = useSession()
+  const {data:session} = useSession({
+    required:true,
+    onUnauthenticated(){
+      router.push("/")
+    }
+  })
 
   
   const [submitting, setSubmitting] = useState(false);
